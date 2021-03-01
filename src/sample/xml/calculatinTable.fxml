@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="622.0" prefWidth="884.0" style="-fx-background-color: #2E3348;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.CalculatinTableController">
+    <children>
+        <Label layoutX="212.0" prefHeight="68.0" prefWidth="461.0" text="Peter Justicen Calculator" textFill="#dac5c5">
+            <font>
+                <Font name="Gabriola" size="55.0" />
+            </font>
+        </Label>
+      <SplitPane dividerPositions="0.8249097472924187" layoutX="262.0" layoutY="66.0" orientation="VERTICAL" prefHeight="556.0" prefWidth="884.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="66.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TableView fx:id="goodsTable" layoutX="160.0" layoutY="7.0" prefHeight="454.0" prefWidth="882.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="idgoods" prefWidth="29.0" text="ID" />
+                      <TableColumn fx:id="goods_code" prefWidth="121.0" text="CODE" />
+                        <TableColumn fx:id="goods_name" prefWidth="403.0" text="NAME" />
+                        <TableColumn fx:id="goods_quantity" minWidth="0.0" prefWidth="88.0" text="QUANTITY" />
+                        <TableColumn fx:id="goods_price_one" prefWidth="138.0" text="PRICE FOR ONE" />
+                        <TableColumn fx:id="goods_price_total" minWidth="0.0" prefWidth="102.0" text="TOTAL PRICE" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+        </items>
+      </SplitPane>
+    </children>
+</AnchorPane>
