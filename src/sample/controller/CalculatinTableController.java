@@ -10,12 +10,19 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 import sample.configs.ConstGoods;
 import sample.configs.DatabaseHandler;
 import sample.configs.DatabaseHandlerGoods;
@@ -58,6 +65,9 @@ public class CalculatinTableController {
     @FXML
     void initialize() throws Exception {
         assert goodsTable != null;
+        goodsTable.setEditable(true);
+        changGoods();
+
         idgoods.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id"));
         goods_code.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("code"));
         goods_name.setCellValueFactory(new PropertyValueFactory<Goods, String>("nameOfItem"));
@@ -79,6 +89,7 @@ public class CalculatinTableController {
     }
 
     private ObservableList<Goods> data;
+    // Вывод данных из БД
     public void buildData() {
 
         data = FXCollections.observableArrayList();
@@ -103,6 +114,67 @@ public class CalculatinTableController {
             throwables.printStackTrace();
         }
     }
+
+
+    // Изменения данных таблицы
+    public void changGoods() {
+
+        idgoods.setCellFactory(TextFieldTableCell.<Goods, Integer>forTableColumn(new IntegerStringConverter()));
+        idgoods.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Goods, Integer>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Goods, Integer> g) {
+                ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
+                        .setId(g.getNewValue());
+            }
+        });
+
+        goods_code.setCellFactory(TextFieldTableCell.<Goods, Integer>forTableColumn(new IntegerStringConverter()));
+        goods_code.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Goods, Integer>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Goods, Integer> g) {
+                ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
+                        .setCode(g.getNewValue());
+            }
+        });
+
+        goods_name.setCellFactory(TextFieldTableCell.forTableColumn());
+        goods_name.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Goods, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Goods, String> g) {
+                ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
+                        .setNameOfItem(g.getNewValue());
+            }
+        });
+
+        goods_quantity.setCellFactory(TextFieldTableCell.<Goods, Integer>forTableColumn(new IntegerStringConverter()));
+        goods_quantity.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Goods, Integer>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Goods, Integer> g) {
+                ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
+                .setQuantity(g.getNewValue());
+            }
+        });
+
+        goods_price_one.setCellFactory(TextFieldTableCell.<Goods, Double>forTableColumn(new DoubleStringConverter()));
+        goods_price_one.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Goods, Double>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Goods, Double> g) {
+                ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
+                        .setPriceForOne(g.getNewValue());
+            }
+        });
+
+        goods_price_total.setCellFactory(TextFieldTableCell.<Goods, Double>forTableColumn(new DoubleStringConverter()));
+        goods_price_total.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Goods, Double>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Goods, Double> g) {
+                ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
+                        .setTotalPrice(g.getNewValue());
+            }
+        });
+    }
+
+
 
 
 
