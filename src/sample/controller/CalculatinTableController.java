@@ -2,6 +2,7 @@ package sample.controller;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -88,9 +89,10 @@ public class CalculatinTableController {
 
     }
 
+
     private ObservableList<Goods> data;
     // Вывод данных из БД
-    public void buildData() {
+    public void buildData(){
 
         data = FXCollections.observableArrayList();
         try {
@@ -134,6 +136,17 @@ public class CalculatinTableController {
             public void handle(TableColumn.CellEditEvent<Goods, Integer> g) {
                 ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
                         .setCode(g.getNewValue());
+                try {
+                    String update = "UPDATE " + ConstGoods.GOODS_TABLE + " SET " + ConstGoods.GOODS_CODE + " = ?";
+                    PreparedStatement statement = con.prepareStatement(update);
+                    statement.setInt(1, g.getNewValue());
+                    statement.executeUpdate();
+                    statement.close();
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+
             }
         });
 
@@ -143,6 +156,17 @@ public class CalculatinTableController {
             public void handle(TableColumn.CellEditEvent<Goods, String> g) {
                 ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
                         .setNameOfItem(g.getNewValue());
+                try {
+                    String update = "UPDATE " + ConstGoods.GOODS_TABLE + " SET " +
+                            ConstGoods.GOODS_NAME_OF_ITEM + " = ?";
+                    PreparedStatement statement = con.prepareStatement(update);
+                    statement.setString(1, g.getNewValue());
+                    statement.executeUpdate();
+                    statement.close();
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
 
@@ -152,6 +176,18 @@ public class CalculatinTableController {
             public void handle(TableColumn.CellEditEvent<Goods, Integer> g) {
                 ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
                 .setQuantity(g.getNewValue());
+                try {
+                    String update = "UPDATE " + ConstGoods.GOODS_TABLE + " SET " +
+                            ConstGoods.GOODS_QUANTITY + " = ?";
+
+                    PreparedStatement statement = con.prepareStatement(update);
+                    statement.setInt(1, g.getNewValue());
+                    statement.executeUpdate();
+                    statement.close();
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
 
@@ -161,6 +197,17 @@ public class CalculatinTableController {
             public void handle(TableColumn.CellEditEvent<Goods, Double> g) {
                 ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
                         .setPriceForOne(g.getNewValue());
+                try {
+                    String update = "UPDATE " + ConstGoods.GOODS_TABLE + " SET " +
+                            ConstGoods.GOODS_PRICE_FOR_ONE + " = ?";
+                    PreparedStatement statement = con.prepareStatement(update);
+                    statement.setDouble(1, g.getNewValue());
+                    statement.executeUpdate();
+                    statement.close();
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
 
@@ -170,13 +217,20 @@ public class CalculatinTableController {
             public void handle(TableColumn.CellEditEvent<Goods, Double> g) {
                 ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
                         .setTotalPrice(g.getNewValue());
+                try {
+                    String update = "UPDATE " + ConstGoods.GOODS_TABLE + " SET " +
+                            ConstGoods.GOODS_TOTAL_PRICE + " = ?";
+                    PreparedStatement statement = con.prepareStatement(update);
+                    statement.setDouble(1, g.getNewValue());
+                    statement.executeUpdate();
+                    statement.close();
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
     }
-
-
-
-
 
 
 
