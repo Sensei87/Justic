@@ -1,25 +1,25 @@
 package sample.controller;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
@@ -34,6 +34,7 @@ import static java.lang.Integer.parseInt;
 public class CalculatinTableController {
 
     Connection con = null;
+
 
 
     @FXML
@@ -63,11 +64,43 @@ public class CalculatinTableController {
     @FXML
     private TableColumn<Goods, Double> goods_price_total;
 
+
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private TextField codeText;
+
+    @FXML
+    private TextField nameText;
+
+    @FXML
+    private TextField quantityText;
+
+    @FXML
+    private TextField priceOneText;
+
+    @FXML
+    private TextField totalPriceText;
+
+
     @FXML
     void initialize() throws Exception {
         assert goodsTable != null;
         goodsTable.setEditable(true);
         changGoods();
+
+        addButton.setOnAction(actionEvent -> {
+            addGoods();
+           /* int index = goodsTable.getSelectionModel().getSelectedIndex() + 1;
+
+            data.add(index, new Goods());
+
+            goodsTable.getSelectionModel().select(index);
+            goodsTable.layout();
+            //goodsTable.edit(index, goods_code);
+*/
+        });
 
         idgoods.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id"));
         goods_code.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("code"));
@@ -76,16 +109,17 @@ public class CalculatinTableController {
         goods_quantity.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("quantity"));
         goods_price_total.setCellValueFactory(new PropertyValueFactory<Goods, Double>("totalPrice"));
 
+
         DatabaseHandlerGoods handlerGoods = new DatabaseHandlerGoods();
         try {
             con = handlerGoods.getConnection();
             buildData();
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }catch (SQLException e) {
             e.printStackTrace();
         }
-
 
     }
 
@@ -127,6 +161,16 @@ public class CalculatinTableController {
             public void handle(TableColumn.CellEditEvent<Goods, Integer> g) {
                 ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
                         .setId(g.getNewValue());
+                try {
+                    String update = "UPDATE " + ConstGoods.GOODS_TABLE + " SET " + ConstGoods.GOODS_ID + " = ?";
+                    PreparedStatement statement = con.prepareStatement(update);
+                    statement.setInt(1, g.getNewValue());
+                    statement.executeUpdate();
+                    statement.close();
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         });
 
@@ -230,6 +274,21 @@ public class CalculatinTableController {
                 }
             }
         });
+    }
+
+    // Метод добавления новых данных в таблицу
+    public void addGoods() {
+        DatabaseHandlerGoods handlerGoods = new DatabaseHandlerGoods();
+        int code = Integer.parseInt(codeText.getText());
+        String nameOfItem = nameText.getText();
+        int quantity = Integer.parseInt(quantityText.getText());
+        double priceForOne = Double.parseDouble(priceOneText.getText());
+        double totalPrice = Double.parseDouble(totalPriceText.getText());
+
+        Goods goods = new Goods(code, nameOfItem, priceForOne, quantity, totalPrice);
+        handlerGoods.addNewGoods(goods);
+
+
     }
 
 

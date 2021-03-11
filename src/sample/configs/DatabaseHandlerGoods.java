@@ -1,7 +1,10 @@
 package sample.configs;
 
+import sample.entitys.Goods;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DatabaseHandlerGoods extends Configs{
@@ -12,6 +15,27 @@ public class DatabaseHandlerGoods extends Configs{
 
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(connectionStr, dbUser, dbPassword);
+    }
+    public void addNewGoods(Goods goods) {
+        String insert = "INSERT INTO " + ConstGoods.GOODS_TABLE + "( " + ConstGoods.GOODS_CODE + ", " +
+                ConstGoods.GOODS_NAME_OF_ITEM + ", " + ConstGoods.GOODS_QUANTITY + ", " +
+                ConstGoods.GOODS_PRICE_FOR_ONE + ", " + ConstGoods.GOODS_TOTAL_PRICE + ")" +
+                "VALUES(?,?,?,?,?)";
+        try {
+            PreparedStatement statement = getConnection().prepareStatement(insert);
+            statement.setInt(1, goods.getCode());
+            statement.setString(2, goods.getNameOfItem());
+            statement.setInt(3, goods.getQuantity());
+            statement.setDouble(4, goods.getPriceForOne());
+            statement.setDouble(5, goods.getTotalPrice());
+
+            statement.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 

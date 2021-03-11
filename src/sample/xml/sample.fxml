@@ -33,7 +33,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <Label layoutX="212.0" layoutY="41.0" prefHeight="68.0" prefWidth="461.0" text="Peter Justicen Calculator" textFill="#dac5c5">
+      <Label layoutX="322.0" layoutY="41.0" prefHeight="68.0" prefWidth="240.0" text="Peter Justicen " textFill="#dac5c5">
          <font>
             <Font name="Gabriola" size="55.0" />
          </font>

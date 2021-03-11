@@ -22,6 +22,13 @@ public class Goods {
         this.quantity.set(quantity);
         this.totalPrice.set(totalPrice);
     }
+    public Goods( int code, String nameOfItem, double priceForOne, int quantity, double totalPrice) {
+        this.code.set(code);
+        this.nameOfItem.set(nameOfItem);
+        this.priceForOne.set(priceForOne);
+        this.quantity.set(quantity);
+        this.totalPrice.set(totalPrice);
+    }
 
 
 

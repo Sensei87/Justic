@@ -21,7 +21,7 @@
                         <Font size="17.0" />
                     </font>
                 </PasswordField>
-                <Button fx:id="authSinButton" layoutX="343.0" layoutY="302.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="181.0" style="-fx-background-color: #F89C70;" text="Зарегистрироваться" textFill="#434242">
+                <Button fx:id="authSinButton" layoutX="343.0" layoutY="302.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="181.0" style="-fx-background-color: #F89C70;" text="Sing Up" textFill="#434242">
                     <font>
                         <Font name="Gadugi" size="16.0" />
                     </font>
@@ -38,7 +38,7 @@
             </TextField>
             </children>
         </AnchorPane>
-        <Label layoutX="212.0" layoutY="41.0" prefHeight="68.0" prefWidth="461.0" text="Peter Justicen Calculator" textFill="#dac5c5">
+        <Label layoutX="212.0" layoutY="41.0" prefHeight="68.0" prefWidth="461.0" text="Peter Justicen Sing up" textFill="#dac5c5">
             <font>
                 <Font name="Gabriola" size="55.0" />
             </font>
