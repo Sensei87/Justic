@@ -20,7 +20,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <TableView fx:id="goodsTable" layoutX="160.0" layoutY="7.0" prefHeight="454.0" prefWidth="882.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="goodsTable" layoutX="160.0" layoutY="7.0" prefHeight="454.0" prefWidth="882.0" style="-fx-background-color: #C0C0C0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="idgoods" prefWidth="29.0" text="ID" />
                       <TableColumn fx:id="goods_code" prefWidth="121.0" text="CODE" />
@@ -34,15 +34,24 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Button fx:id="addButton" layoutX="788.0" layoutY="3.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="92.0" style="-fx-background-color: yellow;" text="Add" textFill="#2c0808">
+                  <Button fx:id="addButton" layoutX="721.0" layoutY="3.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="159.0" style="-fx-background-color: #00BFFF;" text="Add" textFill="#2c0808">
                      <font>
                         <Font size="15.0" />
                      </font></Button>
-                  <TextField fx:id="codeText" layoutX="14.0" layoutY="7.0" prefHeight="25.0" prefWidth="109.0" promptText="code" />
+                  <TextField fx:id="codeText" layoutX="-3.0" layoutY="7.0" prefHeight="25.0" prefWidth="126.0" promptText="code" />
                   <TextField fx:id="nameText" layoutX="123.0" layoutY="7.0" prefHeight="25.0" prefWidth="384.0" promptText="name" />
                   <TextField fx:id="quantityText" layoutX="507.0" layoutY="7.0" prefHeight="25.0" prefWidth="92.0" promptText="quantity" />
-                  <TextField fx:id="priceOneText" layoutX="599.0" layoutY="7.0" prefHeight="25.0" prefWidth="92.0" promptText="price for one" />
-                  <TextField fx:id="totalPriceText" layoutX="691.0" layoutY="7.0" prefHeight="25.0" prefWidth="92.0" promptText="total price" />
+                  <TextField fx:id="priceOneText" layoutX="599.0" layoutY="7.0" prefHeight="25.0" prefWidth="109.0" promptText="price for one" />
+                  <Button fx:id="deleteButton" layoutY="48.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #FF4500;" text="Delete ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="refreshButton" layoutX="720.0" layoutY="48.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="159.0" style="-fx-background-color: #00FF00;" text="Refresh">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
         </items>
       </SplitPane>

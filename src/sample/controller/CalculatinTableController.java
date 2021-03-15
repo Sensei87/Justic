@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -69,6 +71,12 @@ public class CalculatinTableController {
     private Button addButton;
 
     @FXML
+    private Button deleteButton;
+
+    @FXML
+    private Button refreshButton;
+
+    @FXML
     private TextField codeText;
 
     @FXML
@@ -80,8 +88,6 @@ public class CalculatinTableController {
     @FXML
     private TextField priceOneText;
 
-    @FXML
-    private TextField totalPriceText;
 
 
     @FXML
@@ -91,15 +97,34 @@ public class CalculatinTableController {
         changGoods();
 
         addButton.setOnAction(actionEvent -> {
-            addGoods();
-           /* int index = goodsTable.getSelectionModel().getSelectedIndex() + 1;
 
-            data.add(index, new Goods());
+            int index = goodsTable.getSelectionModel().getSelectedIndex() + 1;
+
+            data.add(index, addGoods());
 
             goodsTable.getSelectionModel().select(index);
+
             goodsTable.layout();
-            //goodsTable.edit(index, goods_code);
-*/
+
+            codeText.clear();
+            nameText.clear();
+            quantityText.clear();
+            priceOneText.clear();
+
+
+        });
+        deleteButton.setOnAction(actionEvent -> {
+                delete();
+            goodsTable.getItems().clear();
+            goodsTable.refresh();
+            buildData();
+
+        });
+
+        refreshButton.setOnAction(actionEvent -> {
+            goodsTable.getItems().clear();
+            goodsTable.refresh();
+            buildData();
         });
 
         idgoods.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id"));
@@ -155,7 +180,8 @@ public class CalculatinTableController {
     // Изменения данных таблицы
     public void changGoods() {
 
-        idgoods.setCellFactory(TextFieldTableCell.<Goods, Integer>forTableColumn(new IntegerStringConverter()));
+
+       /* idgoods.setCellFactory(TextFieldTableCell.<Goods, Integer>forTableColumn(new IntegerStringConverter()));
         idgoods.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Goods, Integer>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Goods, Integer> g) {
@@ -173,7 +199,7 @@ public class CalculatinTableController {
                 }
             }
         });
-
+*/
         goods_code.setCellFactory(TextFieldTableCell.<Goods, Integer>forTableColumn(new IntegerStringConverter()));
         goods_code.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Goods, Integer>>() {
             @Override
@@ -181,9 +207,18 @@ public class CalculatinTableController {
                 ((Goods)g.getTableView().getItems().get(g.getTablePosition().getRow()))
                         .setCode(g.getNewValue());
                 try {
-                    String update = "UPDATE " + ConstGoods.GOODS_TABLE + " SET " + ConstGoods.GOODS_CODE + " = ?";
+                    String update = "UPDATE " + ConstGoods.GOODS_TABLE + " SET " + ConstGoods.GOODS_CODE +
+                              " = ?" + " WHERE " + ConstGoods.GOODS_ID + " = ?";
                     PreparedStatement statement = con.prepareStatement(update);
+
+                    // Получить значения id
+                    IntegerProperty val = g.getTableView().getItems().get(g.getTablePosition().getRow())
+                            .idProperty();
+                    //System.out.println(val.get());
+
                     statement.setInt(1, g.getNewValue());
+                    statement.setInt(2, val.get());
+
                     statement.executeUpdate();
                     statement.close();
 
@@ -202,9 +237,16 @@ public class CalculatinTableController {
                         .setNameOfItem(g.getNewValue());
                 try {
                     String update = "UPDATE " + ConstGoods.GOODS_TABLE + " SET " +
-                            ConstGoods.GOODS_NAME_OF_ITEM + " = ?";
+                            ConstGoods.GOODS_NAME_OF_ITEM +
+                            " = ?" + " WHERE " + ConstGoods.GOODS_ID + " = ?";
                     PreparedStatement statement = con.prepareStatement(update);
+
+                    // Получить значения id
+                    IntegerProperty val = g.getTableView().getItems().get(g.getTablePosition().getRow())
+                            .idProperty();
+
                     statement.setString(1, g.getNewValue());
+                    statement.setInt(2, val.get());
                     statement.executeUpdate();
                     statement.close();
 
@@ -222,10 +264,21 @@ public class CalculatinTableController {
                 .setQuantity(g.getNewValue());
                 try {
                     String update = "UPDATE " + ConstGoods.GOODS_TABLE + " SET " +
-                            ConstGoods.GOODS_QUANTITY + " = ?";
-
+                            ConstGoods.GOODS_QUANTITY + " = ? " + ", " + ConstGoods.GOODS_TOTAL_PRICE
+                            + " = ? " + " WHERE " + ConstGoods.GOODS_ID + " = ? ";
                     PreparedStatement statement = con.prepareStatement(update);
+
+                    // Получить значения id
+                    IntegerProperty val = g.getTableView().getItems().get(g.getTablePosition().getRow())
+                            .idProperty();
+                    // Получаем значения ячейки цена за один
+                    DoubleProperty val2 = g.getTableView().getItems().get(g.getTablePosition().getRow())
+                            .priceForOneProperty();
+                    int result = (int) (val2.get() * g.getNewValue());
+
                     statement.setInt(1, g.getNewValue());
+                    statement.setInt(2, result);
+                    statement.setInt(3, val.get());
                     statement.executeUpdate();
                     statement.close();
 
@@ -243,9 +296,23 @@ public class CalculatinTableController {
                         .setPriceForOne(g.getNewValue());
                 try {
                     String update = "UPDATE " + ConstGoods.GOODS_TABLE + " SET " +
-                            ConstGoods.GOODS_PRICE_FOR_ONE + " = ?";
+                            ConstGoods.GOODS_PRICE_FOR_ONE + " = ? " + ", " + ConstGoods.GOODS_TOTAL_PRICE
+                            + " = ? " + " WHERE " + ConstGoods.GOODS_ID + " = ? ";
+
                     PreparedStatement statement = con.prepareStatement(update);
+
+                    // Получить значения id
+                    IntegerProperty val = g.getTableView().getItems().get(g.getTablePosition().getRow())
+                            .idProperty();
+                    // Получаем значения ячейки количество
+                    IntegerProperty val2 = g.getTableView().getItems().get(g.getTablePosition().getRow())
+                            .quantityProperty();
+                    int result = (int) (val2.get() * g.getNewValue());
+
+                    System.out.println(result);
                     statement.setDouble(1, g.getNewValue());
+                    statement.setDouble(2, result);
+                    statement.setInt(3, val.get());
                     statement.executeUpdate();
                     statement.close();
 
@@ -255,7 +322,7 @@ public class CalculatinTableController {
             }
         });
 
-        goods_price_total.setCellFactory(TextFieldTableCell.<Goods, Double>forTableColumn(new DoubleStringConverter()));
+       /* goods_price_total.setCellFactory(TextFieldTableCell.<Goods, Double>forTableColumn(new DoubleStringConverter()));
         goods_price_total.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Goods, Double>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Goods, Double> g) {
@@ -263,9 +330,16 @@ public class CalculatinTableController {
                         .setTotalPrice(g.getNewValue());
                 try {
                     String update = "UPDATE " + ConstGoods.GOODS_TABLE + " SET " +
-                            ConstGoods.GOODS_TOTAL_PRICE + " = ?";
+                            ConstGoods.GOODS_TOTAL_PRICE +
+                            " = ?" + " WHERE " + ConstGoods.GOODS_ID + " = ?";
                     PreparedStatement statement = con.prepareStatement(update);
+
+                    // Получить значения id
+                    IntegerProperty val = g.getTableView().getItems().get(g.getTablePosition().getRow())
+                            .idProperty();
+
                     statement.setDouble(1, g.getNewValue());
+                    statement.setDouble(2, val.get());
                     statement.executeUpdate();
                     statement.close();
 
@@ -274,21 +348,46 @@ public class CalculatinTableController {
                 }
             }
         });
+    */
+
     }
 
+
     // Метод добавления новых данных в таблицу
-    public void addGoods() {
+    public Goods addGoods() {
         DatabaseHandlerGoods handlerGoods = new DatabaseHandlerGoods();
         int code = Integer.parseInt(codeText.getText());
         String nameOfItem = nameText.getText();
         int quantity = Integer.parseInt(quantityText.getText());
         double priceForOne = Double.parseDouble(priceOneText.getText());
-        double totalPrice = Double.parseDouble(totalPriceText.getText());
+        double totalPrice = Double.parseDouble(String.valueOf((priceForOne * quantity)));
 
         Goods goods = new Goods(code, nameOfItem, priceForOne, quantity, totalPrice);
         handlerGoods.addNewGoods(goods);
 
+        return goods;
 
+    }
+
+    // Метод удаления данных таблицы
+    public void delete() {
+
+            try {
+                String delete = "DELETE FROM " + ConstGoods.GOODS_TABLE + " WHERE " + ConstGoods.GOODS_ID +
+                        " = ?";
+                PreparedStatement statement = con.prepareStatement(delete);
+                IntegerProperty sel = goodsTable.getSelectionModel().getSelectedItem().idProperty();
+                statement.setInt(1, sel.get());
+                System.out.println(sel.get());
+                statement.executeUpdate();
+                statement.close();
+
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+        System.out.println("Inside method delete");
     }
 
 

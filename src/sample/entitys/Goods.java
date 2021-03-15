@@ -30,6 +30,10 @@ public class Goods {
         this.totalPrice.set(totalPrice);
     }
 
+    public Goods(int id) {
+        this.id.set(id);
+    }
+
 
 
     public IntegerProperty idProperty() {
