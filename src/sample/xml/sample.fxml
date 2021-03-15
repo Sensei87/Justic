@@ -21,12 +21,12 @@
                   <Font size="17.0" />
                </font>
             </PasswordField>
-            <Label layoutX="341.0" text="Авторизация" textFill="#403f3f">
+            <Label layoutX="341.0" text="Authorization" textFill="#403f3f">
                <font>
                   <Font name="Gabriola" size="45.0" />
                </font>
             </Label>
-            <Button fx:id="authSinButton" layoutX="353.0" layoutY="201.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="178.0" style="-fx-background-color: #F89C70;" text="Войти" textFill="#434242">
+            <Button fx:id="authSinButton" layoutX="353.0" layoutY="201.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="178.0" style="-fx-background-color: #F89C70;" text="Sign in" textFill="#434242">
                <font>
                   <Font name="Gadugi" size="23.0" />
                </font>
@@ -38,7 +38,7 @@
             <Font name="Gabriola" size="55.0" />
          </font>
       </Label>
-      <Button fx:id="lognSingUpButton" layoutX="710.0" layoutY="7.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="160.0" style="-fx-background-color: #F39C63;" text="Зарегестрироваться" textFill="#fcfcfc">
+      <Button fx:id="lognSingUpButton" layoutX="710.0" layoutY="7.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="160.0" style="-fx-background-color: #F39C63;" text="Sign up" textFill="#fcfcfc">
          <font>
             <Font name="Gadugi" size="15.0" />
          </font>

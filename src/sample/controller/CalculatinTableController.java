@@ -181,7 +181,8 @@ public class CalculatinTableController {
     public void changGoods() {
 
 
-       /* idgoods.setCellFactory(TextFieldTableCell.<Goods, Integer>forTableColumn(new IntegerStringConverter()));
+       /*
+        idgoods.setCellFactory(TextFieldTableCell.<Goods, Integer>forTableColumn(new IntegerStringConverter()));
         idgoods.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Goods, Integer>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Goods, Integer> g) {
@@ -274,10 +275,10 @@ public class CalculatinTableController {
                     // Получаем значения ячейки цена за один
                     DoubleProperty val2 = g.getTableView().getItems().get(g.getTablePosition().getRow())
                             .priceForOneProperty();
-                    int result = (int) (val2.get() * g.getNewValue());
+                    double result = (double) (val2.get() * g.getNewValue());
 
                     statement.setInt(1, g.getNewValue());
-                    statement.setInt(2, result);
+                    statement.setDouble(2, result);
                     statement.setInt(3, val.get());
                     statement.executeUpdate();
                     statement.close();
@@ -307,9 +308,8 @@ public class CalculatinTableController {
                     // Получаем значения ячейки количество
                     IntegerProperty val2 = g.getTableView().getItems().get(g.getTablePosition().getRow())
                             .quantityProperty();
-                    int result = (int) (val2.get() * g.getNewValue());
+                    double result =  (val2.get() * g.getNewValue());
 
-                    System.out.println(result);
                     statement.setDouble(1, g.getNewValue());
                     statement.setDouble(2, result);
                     statement.setInt(3, val.get());
@@ -378,7 +378,7 @@ public class CalculatinTableController {
                 PreparedStatement statement = con.prepareStatement(delete);
                 IntegerProperty sel = goodsTable.getSelectionModel().getSelectedItem().idProperty();
                 statement.setInt(1, sel.get());
-                System.out.println(sel.get());
+
                 statement.executeUpdate();
                 statement.close();
 
@@ -387,7 +387,6 @@ public class CalculatinTableController {
                 throwables.printStackTrace();
             }
 
-        System.out.println("Inside method delete");
     }
 
 

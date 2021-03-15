@@ -11,34 +11,34 @@
     <children>
         <AnchorPane layoutY="100.0" prefHeight="366.0" prefWidth="884.0" style="-fx-background-color: #FAFAFA;">
             <children>
-                <TextField fx:id="singUpLastname" layoutX="499.0" layoutY="14.0" prefHeight="25.0" prefWidth="240.0" promptText="Фамилия" style="-fx-background-color: #FAFAFA; -fx-border-color: SILVER; -fx-border-radius: 5;">
+                <TextField fx:id="singUpLastname" layoutX="499.0" layoutY="14.0" prefHeight="25.0" prefWidth="240.0" promptText="Surname" style="-fx-background-color: #FAFAFA; -fx-border-color: SILVER; -fx-border-radius: 5;">
                     <font>
                         <Font size="17.0" />
                     </font>
                 </TextField>
-                <PasswordField fx:id="password_fild" layoutX="499.0" layoutY="78.0" prefHeight="25.0" prefWidth="240.0" promptText="Пароль" style="-fx-background-color: #FAFAFA; -fx-border-color: SILVER; -fx-border-radius: 5;">
+                <PasswordField fx:id="password_fild" layoutX="499.0" layoutY="78.0" prefHeight="25.0" prefWidth="240.0" promptText="Password" style="-fx-background-color: #FAFAFA; -fx-border-color: SILVER; -fx-border-radius: 5;">
                     <font>
                         <Font size="17.0" />
                     </font>
                 </PasswordField>
-                <Button fx:id="authSinButton" layoutX="343.0" layoutY="302.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="181.0" style="-fx-background-color: #F89C70;" text="Sing Up" textFill="#434242">
+                <Button fx:id="authSinButton" layoutX="343.0" layoutY="302.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="181.0" style="-fx-background-color: #F89C70;" text="Sign Up" textFill="#434242">
                     <font>
                         <Font name="Gadugi" size="16.0" />
                     </font>
                 </Button>
-            <TextField fx:id="singUpName" layoutX="145.0" layoutY="14.0" prefHeight="25.0" prefWidth="240.0" promptText="Имя" style="-fx-background-color: #FAFAFA; -fx-border-color: SILVER; -fx-border-radius: 5;">
+            <TextField fx:id="singUpName" layoutX="145.0" layoutY="14.0" prefHeight="25.0" prefWidth="240.0" promptText="Name" style="-fx-background-color: #FAFAFA; -fx-border-color: SILVER; -fx-border-radius: 5;">
                <font>
                   <Font size="17.0" />
                </font>
             </TextField>
-            <TextField fx:id="login_fild2" layoutX="145.0" layoutY="78.0" prefHeight="25.0" prefWidth="240.0" promptText="Логин" style="-fx-background-color: #FAFAFA; -fx-border-color: SILVER; -fx-border-radius: 5;">
+            <TextField fx:id="login_fild2" layoutX="145.0" layoutY="78.0" prefHeight="25.0" prefWidth="240.0" promptText="Login" style="-fx-background-color: #FAFAFA; -fx-border-color: SILVER; -fx-border-radius: 5;">
                <font>
                   <Font size="17.0" />
                </font>
             </TextField>
             </children>
         </AnchorPane>
-        <Label layoutX="212.0" layoutY="41.0" prefHeight="68.0" prefWidth="461.0" text="Peter Justicen Sing up" textFill="#dac5c5">
+        <Label layoutX="212.0" layoutY="41.0" prefHeight="68.0" prefWidth="461.0" text="Peter Justicen Sign up" textFill="#dac5c5">
             <font>
                 <Font name="Gabriola" size="55.0" />
             </font>
